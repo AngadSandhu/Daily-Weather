@@ -6,8 +6,10 @@ const currentWeatherURL = process.env.WEATHER_URL + "/current.json?key=" + proce
 
 request({ url: currentWeatherURL },(error,response)=> {
     if(response){
-        console.log(chalk.green("Success"));
-        console.log(response);
+        console.log(chalk.green("Success!"));
     }
-    
+    if(error){
+        console.log(chalk.red("An error occured"));
+        console.log(error);
+    }
 });
