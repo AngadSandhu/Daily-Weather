@@ -1,5 +1,7 @@
 const express = require("express");
 const path = require("path");
+const geoCode =  require("./src/geocode");
+const getWeather =  require("./src/weather");
 
 // Initialize Express
 const app = express();
@@ -8,9 +10,22 @@ const publicDirPath = path.join(__dirname,"../public");
 app.set("view engine", "hbs");                          // Sets the view engine to hbs
 app.use(express.static(publicDirPath));                 // Used for serving static content
 
-app.get("/", (req,res)=>{
+app.get("/home", (req,res)=>{
+    let results;
+    geoCode("Toronto",(error,response)=>{
+        if(response){
+            getWeather(response.latitude,response.longitude,(err,resp)=>{
+                console.log(resp);
+                results = resp;
+            })
+        }
+    });
     res.render("home");
-    res.send("Welocme to Daily Weather App");
+    res.send({results});
+});
+
+app.get("/about", (req,res)=>{
+    res.render("about");
 });
 
 app.listen(3000,()=>{
