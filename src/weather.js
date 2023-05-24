@@ -1,10 +1,11 @@
 const request = require("postman-request");
 const chalk = require("chalk");
+const geocode = require("./geocode.js");
 require("dotenv").config({ path: "../.env"});
 
 const getWeatherDetails = (latitude,longitude, weatherDetailsCallback) => {
-    const currentWeatherURL = process.env.WEATHER_URL + "/current.json?key=" + process.env.WEATHER_API_KEY + encodeURIComponent("&") + "q=Chandigarh"; 
-    request({ url: currentWeatherURL },(error,response)=> {
+    const currentWeatherURL = process.env.WEATHER_URL + "current.json?key=" + process.env.WEATHER_API_KEY  + `&q=${latitude},${longitude}`;
+    request({ url: currentWeatherURL, json: true },(error,response,body)=> {
         if(response){
             console.log(chalk.green("Success!"));
             weatherDetailsCallback(undefined,response);

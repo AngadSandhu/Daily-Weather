@@ -3,9 +3,7 @@ const chalk = require("chalk");
 require("dotenv").config({ path: "../.env"});
 
 const geoCode = (location, geoCodeCallback) => {
-    const geoCodeURL = process.env.GEOCODE_URL + encodeURIComponent(location) + ".json?access_token=" + process.env.GEOCODE_API_KEY ; 
-    console.log(geoCodeURL);
-    debugger;
+    const geoCodeURL = process.env.GEOCODE_URL + encodeURIComponent(location) + ".json?access_token=" + process.env.GEOCODE_API_KEY ;
     request({ url: geoCodeURL, json:true },(error,response,body)=> {
         if(response && response.body){
             console.log(chalk.green("Success!"));
@@ -24,8 +22,4 @@ const geoCode = (location, geoCodeCallback) => {
     });
 };
 
-geoCode("Toronto", (err,res)=>{
-    console.log("Success",res);
-})
-
-//module.exports = geoCode;
+module.exports = geoCode;
