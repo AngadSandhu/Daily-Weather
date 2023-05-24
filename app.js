@@ -8,13 +8,19 @@ const getWeather =  require("./src/weather");
 const app = express();
 
 // Setting up paths for public and views directory
-const publicDirPath = path.join(__dirname,"../public");
-const viewsDirPath = path.join(__dirname,"../templates/views");
+const publicDirPath = path.join(__dirname,"/public");
+const viewsDirPath = path.join(__dirname,"./templates/views");
+const partialsDirPath = path.join(__dirname, "./templates/partials");
 
 app.set("view engine", "hbs");                          // Sets the view engine to hbs
 app.set("views", viewsDirPath)                          // Sets the path to views directory for hbs
 
 app.use(express.static(publicDirPath));                 // Used for serving static content
+hbs.registerPartials(partialsDirPath);
+
+app.get("", (req,res)=> {
+    res.render("index");
+});
 
 app.get("/home", (req,res)=>{
     let results;
@@ -27,11 +33,16 @@ app.get("/home", (req,res)=>{
         }
     });
     res.render("home");
-    res.send({results});
 });
 
 app.get("/about", (req,res)=>{
     res.render("about");
+});
+
+app.get("*",(req,res)=>{
+    res.render("pageNotFound",{
+        message: "Sorry ! Thee content you are looking for does not exist."
+    })
 });
 
 app.listen(3000,()=>{
