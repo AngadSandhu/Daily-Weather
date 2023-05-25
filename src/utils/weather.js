@@ -8,7 +8,7 @@ const getWeatherDetails = (latitude,longitude, weatherDetailsCallback) => {
     request({ url: currentWeatherURL, json: true },(error,response,body)=> {
         if(response){
             console.log(chalk.green("Success!"));
-            weatherDetailsCallback(undefined,response);
+            weatherDetailsCallback(undefined,response.body);
         }
         if(error){
             console.log(chalk.red("An error occured"));
