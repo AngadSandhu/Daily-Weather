@@ -1,16 +1,17 @@
 const express = require("express");
 const path = require("path");
 const hbs = require("hbs");
-const geoCode =  require("./src/geocode");
-const getWeather =  require("./src/weather");
+const geoCode =  require("./src/utils/geocode");
+const getWeather =  require("./src/utils/weather");
 
 // Initialize Express
 const app = express();
 
 // Setting up paths for public and views directory
-const publicDirPath = path.join(__dirname,"/public");
+const publicDirPath = path.join(__dirname,"./public");
 const viewsDirPath = path.join(__dirname,"./templates/views");
 const partialsDirPath = path.join(__dirname, "./templates/partials");
+console.log(publicDirPath,viewsDirPath)
 
 app.set("view engine", "hbs");                          // Sets the view engine to hbs
 app.set("views", viewsDirPath)                          // Sets the path to views directory for hbs
@@ -18,11 +19,15 @@ app.set("views", viewsDirPath)                          // Sets the path to view
 app.use(express.static(publicDirPath));                 // Used for serving static content
 hbs.registerPartials(partialsDirPath);
 
-app.get("", (req,res)=> {
+app.get("/", (req,res)=> {
     res.render("index");
 });
 
-app.get("/home", (req,res)=>{
+app.get("/about", (req,res)=>{
+    res.render("about");
+});
+
+app.get("/weather", (req,res)=>{
     let results;
     geoCode("Toronto",(error,response)=>{
         if(response){
@@ -35,9 +40,6 @@ app.get("/home", (req,res)=>{
     res.render("home");
 });
 
-app.get("/about", (req,res)=>{
-    res.render("about");
-});
 
 app.get("*",(req,res)=>{
     res.render("pageNotFound",{

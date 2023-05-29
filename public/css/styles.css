@@ -1,6 +1,6 @@
 body {
     color: #333333;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Arial, Helvetica, sans-serif;
     max-width: 650px;
     padding: 20px;
     margin: 0 20px;
@@ -13,4 +13,8 @@ header{
 
 footer{
     background-color: lightgray;
+    min-height: 40px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }

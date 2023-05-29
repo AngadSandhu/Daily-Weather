@@ -1,10 +1,13 @@
 <html>
     <head>
-        
+        <link rel="stylesheet" href="/css/styles.css"/>
+        <!--  Here relative path is being used in the link tag, where '/' is the relative path to public directory, set in express config -->
     </head>
     <body>
         {{>header}}
-            This app is powered by NodeJS
+        <h1>Welocme To The Daily Weather App</h1>
+       
+        {{results}}
         {{>footer}}
     </body>
 </html>
