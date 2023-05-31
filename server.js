@@ -11,7 +11,6 @@ const app = express();
 const publicDirPath = path.join(__dirname,"./public");
 const viewsDirPath = path.join(__dirname,"./templates/views");
 const partialsDirPath = path.join(__dirname, "./templates/partials");
-console.log(publicDirPath,viewsDirPath)
 
 app.set("view engine", "hbs");                          // Sets the view engine to hbs
 app.set("views", viewsDirPath)                          // Sets the path to views directory for hbs
@@ -20,11 +19,15 @@ app.use(express.static(publicDirPath));                 // Used for serving stat
 hbs.registerPartials(partialsDirPath);
 
 app.get("/", (req,res)=> {
-    res.render("index");
+    res.render("index", {
+        title: "The Daily Weather"
+    });
 });
 
 app.get("/about", (req,res)=>{
-    res.render("about");
+    res.render("about", {
+        title: "The Daily Weather"
+    });
 });
 
 app.get("/weather", (req,res)=>{
