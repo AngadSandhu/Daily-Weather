@@ -1,8 +1,9 @@
 const express = require("express");
 const path = require("path");
 const hbs = require("hbs");
-const geoCode =  require("./src/utils/geocode");
-const getWeather =  require("./src/utils/weather");
+const geocode =  require("./src/utils/geocode");
+const weatherForecast =  require("./src/utils/weather");
+require("dotenv").config({ path: "./.env"});
 
 // Initialize Express
 const app = express();
@@ -31,16 +32,25 @@ app.get("/about", (req,res)=>{
 });
 
 app.get("/weather", (req,res)=>{
-    let results;
-    geoCode("Toronto",(error,response)=>{
-        if(response){
-            getWeather(response.latitude,response.longitude,(err,resp)=>{
-                console.log(resp);
-                results = resp;
+    if(!req.query.address){
+        return res.send({
+            error: "Please provide a valid address"
+        })
+    }
+    geocode(req.query.address,(err,data)=>{
+        if(err){
+            return res.send({error: err});
+        } 
+        weatherForecast(data.latitude, data.longitude, (error,result)=> {
+            if(error){
+                return res.send({error});
+            }
+            console.log("Forcecast details are as follows", result);
+            return res.send({
+                result
             })
-        }
+        })
     });
-    res.render("home");
 });
 
 

@@ -3,7 +3,7 @@ const chalk = require("chalk");
 require("dotenv").config({ path: "../.env"});
 
 const geoCode = (location, geoCodeCallback) => {
-    const geoCodeURL = process.env.GEOCODE_URL + encodeURIComponent(location) + ".json?access_token=" + process.env.GEOCODE_API_KEY ;
+    const geoCodeURL = process.env.GEOCODE_URL + (location) + ".json?access_token=" + process.env.GEOCODE_API_KEY ;
     request({ url: geoCodeURL, json:true },(error,response,body)=> {
         if(response && response.body){
             console.log(chalk.green("Success!"));
@@ -16,7 +16,7 @@ const geoCode = (location, geoCodeCallback) => {
             geoCodeCallback(undefined, coordinates);
         }
         if(error){
-            console.log(chalk.red("An error occured"));
+            console.log(chalk.red("An error occured while fetching the geocoding details"));
             geoCodeCallback(error,undefined)
         }
     });
