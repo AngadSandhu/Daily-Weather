@@ -46,7 +46,7 @@ app.get("/weather", (req,res)=>{
                 return res.send({error});
             }
             console.log("Forcecast details are as follows", result);
-            return res.send({
+            res.send({
                 result
             })
         })
