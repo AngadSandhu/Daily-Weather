@@ -16,7 +16,7 @@ const partialsDirPath = path.join(__dirname, "./templates/partials");
 app.set("view engine", "hbs");                          // Sets the view engine to hbs
 app.set("views", viewsDirPath)                          // Sets the path to views directory for hbs
 
-app.use(express.static(publicDirPath));                 // Used for serving static content
+app.use(express.static(publicDirPath));                 // Important - Used for serving static content
 hbs.registerPartials(partialsDirPath);
 
 app.get("/", (req,res)=> {
@@ -27,7 +27,9 @@ app.get("/", (req,res)=> {
 
 app.get("/about", (req,res)=>{
     res.render("about", {
-        title: "The Daily Weather"
+        title: "The Daily Weather",
+        github: process.env.GITHUB,
+        linkedin: process.env.LINKEDIN
     });
 });
 
@@ -47,7 +49,7 @@ app.get("/weather", (req,res)=>{
             }
             console.log("Forcecast details are as follows", result);
             res.send({
-                result
+                ...result
             })
         })
     });

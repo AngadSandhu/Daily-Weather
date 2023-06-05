@@ -7,7 +7,19 @@
     <body>
         <div>
             {{>header}}
+            <h4>Please enter your city name to know the current weather details</h4>
+            <br/>
+            <form id="weatherForm">
+                <label for="address">Location:</label>
+                <input id="address" placeholder="Enter the location"/>
+                <button type="submit">Check Weather</button>
+            </form>
+            <br/>
+            <div id="desc"></div>
             {{>footer}}
         </div>
+        <br/>
+        <div id="desc"></p>
+        <script src="/js/app.js"></script>
     </body>
 </html>
